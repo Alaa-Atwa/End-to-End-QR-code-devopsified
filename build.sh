@@ -17,8 +17,8 @@ aws iam create-access-key --user-name github-actions-ci
 
 
 # ---- add GitHub repo secrets -------
-In your repo: Settings → Secrets and variables → Actions → New repository secret. Add:
-AWS_ACCESS_KEY_ID	 --> from the IAM user above
-AWS_SECRET_ACCESS_KEY	 --> from the IAM user above
-AWS_ACCOUNT_ID	 --> your 12-digit AWS account ID
-AWS_REGION	 --> e.g. us-east-1
+# In your repo: Settings → Secrets and variables → Actions → New repository secret. Add:
+# AWS_ACCESS_KEY_ID	 --> from the IAM user above
+# AWS_SECRET_ACCESS_KEY	 --> from the IAM user above
+# AWS_ACCOUNT_ID	 --> your 12-digit AWS account ID
+# AWS_REGION	 --> e.g. us-east-1

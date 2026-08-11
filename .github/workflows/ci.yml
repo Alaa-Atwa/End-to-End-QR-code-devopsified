@@ -1,0 +1,71 @@
+name: ci for the qr-app
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+jobs:
+  test-api:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: setup python3
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: install dependencies
+        working-directory: ./api
+        run: |
+          pip install -r requirements.txt
+          pip install flake8 pytest
+
+      - name: lint
+        working-directory: ./api
+        run: flake8 . --max-line-length=120 --exclude=.venv
+        # Flake8 is a static code analysis tool that checks Python code for style violations (PEP 8) and programming errors
+
+      - name: test
+        working-directory: ./api
+        run: pytest
+        #  pytest is a testing framework used to write, organize, and execute unit tests.
+
+  # ---------------------------------------------- build & push images job -------------------- ------------
+  build-and-push:
+    needs: test-api
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    # trigger this job only if push happened, no pull_request trigger for this job
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Login to ECR
+        id: ecr-login # we will use this id in the next step for build and push
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build & push API (backend) image
+        working-directory: ./api
+        env:
+          REGISTRY: ${{ steps.ecr-login.outputs.registry }}
+        run: |
+          docker build -t $REGISTRY/qr-code-api:${{ github.sha }} -t $REGISTRY/qr-code-api:latest .
+          docker push $REGISTRY/qr-code-api:${{ github.sha }}
+          docker push $REGISTRY/qr-code-api:latest
+
+      - name: Build & push frontend image
+        working-directory: ./front-end-nextjs
+        env:
+          REGISTRY: ${{ steps.ecr-login.outputs.registry }}
+        run: |
+          docker build -t $REGISTRY/qr-code-frontend:${{ github.sha }} -t $REGISTRY/qr-code-frontend:latest .
+          docker push $REGISTRY/qr-code-frontend:${{ github.sha }}
+          docker push $REGISTRY/qr-code-frontend:latest
