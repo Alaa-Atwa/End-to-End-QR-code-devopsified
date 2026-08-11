@@ -37,13 +37,15 @@ It generates QR Codes for the provided URL, the front-end is in NextJS and the A
 
 **Front-End** - A web application where users can submit URLs.
 
-**API**: API that receives URLs and generates QR codes. The API stores the QR codes in cloud storage(AWS S3 Bucket).
+**(backend)**: API that receives URLs and generates QR codes. The API stores the QR codes in cloud storage(AWS S3 Bucket).
 
 ## Running locally
 
-### API
+### (backend)
 
 The API code exists in the `api` directory. You can run the API server locally:
+
+*Uvicorn is a lightning-fast ASGI (Asynchronous Server Gateway Interface) web server implementation for Python*
 
 - Clone this repo
 - Make sure you are in the `api` directory
@@ -65,4 +67,13 @@ The front-end code exits in the `front-end-nextjs` directory. You can run the fr
 - Your Front-end Server should be running on `http://localhost:3000`
 
 ---
+## Docker
 
+- after creating docker files and docker-compose you need to tag and push docker images to docker hub
+
+```bash
+docker tag ...
+docker push ...
+```
+**note on frontend Dockerfile**
+Why three stages: the deps and builder stages contain the full node_modules (including dev dependencies like tailwindcss), source files, and build cache — none of that needs to exist in the image that actually runs in production. Only the compiled .next output and runtime node_modules get copied into the final runner stage, reducing image size and more.
