@@ -20,9 +20,6 @@ spec:
           image: "{{ .Values.frontend.image.repository }}:{{ .Values.frontend.image.tag }}"
           ports:
             - containerPort: {{ .Values.frontend.port }}
-          env:
-            - name: NEXT_PUBLIC_API_URL
-              value: "http://qr-api-service:{{ .Values.api.port }}"
           resources:
             {{- toYaml .Values.frontend.resources | nindent 12 }}
           readinessProbe:

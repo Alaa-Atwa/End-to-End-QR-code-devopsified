@@ -1,0 +1,33 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: qr-app-ingress
+  namespace: {{ .Values.namespace }}
+  annotations:
+    cert-manager.io/cluster-issuer: selfsigned-issuer
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - {{ .Values.hostname }}
+      secretName: qr-app-tls
+  rules:
+    - host: {{ .Values.hostname }}
+      http:
+        paths:
+          - path: /api(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: qr-api-service
+                port:
+                  number: {{ .Values.api.port }}
+          - path: /()(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: qr-frontend-service
+                port:
+                  number: {{ .Values.frontend.port }}
