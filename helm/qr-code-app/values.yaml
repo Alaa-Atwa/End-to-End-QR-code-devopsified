@@ -1,4 +1,5 @@
 namespace: qr-code-app
+hostname: qr-app.local
 
 api:
   image:

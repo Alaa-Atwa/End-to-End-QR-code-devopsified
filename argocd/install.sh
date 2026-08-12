@@ -38,4 +38,9 @@ ArgoCD + an external Helm repo + your own custom values
 # the other is your values file, tied together with a $values reference.
 
 
+# Ingress 
+
+kubectl get svc -n ingress-nginx
+
+
 

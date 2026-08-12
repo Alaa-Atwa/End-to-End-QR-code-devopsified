@@ -69,6 +69,6 @@ jobs:
         env:
           REGISTRY: ${{ steps.ecr-login.outputs.registry }}
         run: |
-          docker build -t $REGISTRY/qr-code-frontend:${{ github.sha }} -t $REGISTRY/qr-code-frontend:latest .
+          docker build --build-arg NEXT_PUBLIC_API_URL=/api -t $REGISTRY/qr-code-frontend:${{ github.sha }} -t $REGISTRY/qr-code-frontend:latest .
           docker push $REGISTRY/qr-code-frontend:${{ github.sha }}
           docker push $REGISTRY/qr-code-frontend:latest
