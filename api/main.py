@@ -1,6 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import qrcode
+from pydantic import BaseModel 
 import boto3
 import os
 from io import BytesIO

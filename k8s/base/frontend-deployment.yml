@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: qr-frontend
+  namespace: qr-code-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: qr-frontend
+  template:
+    metadata:
+      labels:
+        app: qr-frontend
+    spec:
+      containers:
+        - name: qr-frontend
+          image: 970460117753.dkr.ecr.us-east-1.amazonaws.com/qr-code-fronted:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: NEXT_PUBLIC_API_URL
+              value: "http://qr-api-service:8000"
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "250m"
+              memory: "256Mi"
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 10

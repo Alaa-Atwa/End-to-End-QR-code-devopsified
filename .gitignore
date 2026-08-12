@@ -1,1 +1,5 @@
 .env 
+.terraform/
+*.tfstate*
+./terraform/envs/prod/.terraform*
+k8s/base/secret.yml

@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: qr-api
+  namespace: qr-code-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: qr-api
+  template:
+    metadata:
+      labels:
+        app: qr-api
+    spec:
+      containers:
+        - name: qr-api
+          image: 970460117753.dkr.ecr.us-east-1.amazonaws.com/qr-code-api:latest
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - secretRef:
+                name: qr-app-secrets
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "250m"
+              memory: "256Mi"
+          readinessProbe:
+            httpGet:
+              path: /docs
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /docs
+              port: 8000
+            initialDelaySeconds: 15
+            periodSeconds: 20

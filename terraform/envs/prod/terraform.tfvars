@@ -1,0 +1,1 @@
+app_bucket_name = "qr-app-s3-bucket"

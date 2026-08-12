@@ -77,3 +77,13 @@ docker push ...
 ```
 **note on frontend Dockerfile**
 Why three stages: the deps and builder stages contain the full node_modules (including dev dependencies like tailwindcss), source files, and build cache — none of that needs to exist in the image that actually runs in production. Only the compiled .next output and runtime node_modules get copied into the final runner stage, reducing image size and more.
+
+
+## terraform 
+**EKS** needs two separate IAM roles, and mixing them up is the single most common EKS setup mistake, so let's be precise about which is which:
+
+1. Cluster role — assumed by the EKS control plane itself (the managed API server AWS runs for you) so it can manage AWS resources on your behalf (like creating load balancers later).
+2. Node role — assumed by the EC2 instances that become your worker nodes, so they can register with the cluster, pull images from ECR, and let the CNI plugin assign pod networking.
+
+Different identities, different jobs — the control plane never runs your pods, and the nodes never manage the API serve
+
