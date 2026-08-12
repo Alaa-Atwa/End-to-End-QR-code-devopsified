@@ -78,20 +78,6 @@ separate, cheaper environment from the orchestrated EKS production cluster.
 
 ---
 
-## Screenshots
-
-| | |
-|---|---|
-| App UI | `docs/screenshots/app-ui.png` |
-| ArgoCD sync view | `docs/screenshots/argocd-sync.png` |
-| Grafana dashboard | `docs/screenshots/grafana-dashboard.png` |
-| `kubectl get pods` output | `docs/screenshots/pods-running.png` |
-
-Create a `docs/screenshots/` folder, drop images in with those names, and they'll render inline
-here automatically — e.g. `![App UI](docs/screenshots/app-ui.png)`.
-
----
-
 ## Tech stack
 
 | Layer | Tools |
