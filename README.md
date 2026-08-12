@@ -1,13 +1,8 @@
 # QR Code Generator — End-to-End DevOps Pipeline
 
-A simple two-tier app (Next.js frontend + FastAPI backend generating QR codes to S3) wrapped in a
+A two-tier app (Next.js frontend + FastAPI backend generating QR codes to S3) wrapped in a
 full, production-style DevOps pipeline: containerized, provisioned as code, deployed via GitOps,
 and observed with a real Prometheus/Grafana stack.
-
-The app itself is intentionally simple — a URL in, a QR code out. The infrastructure and delivery
-pipeline around it is the actual point of this repo.
-
-> Base application originally from [rishabkumar7/devops-qr-code](https://github.com/rishabkumar7/devops-qr-code) — this repo builds a complete DevOps platform around it.
 
 ---
 
@@ -75,20 +70,6 @@ flowchart TB
 Worker nodes run in private subnets with no direct internet exposure; only the NAT Gateway lets
 them reach out (for pulling images, etc.). The staging EC2 box is intentionally public — it's a
 separate, cheaper environment from the orchestrated EKS production cluster.
-
----
-
-## Screenshots
-
-| | |
-|---|---|
-| App UI | `docs/screenshots/app-ui.png` |
-| ArgoCD sync view | `docs/screenshots/argocd-sync.png` |
-| Grafana dashboard | `docs/screenshots/grafana-dashboard.png` |
-| `kubectl get pods` output | `docs/screenshots/pods-running.png` |
-
-Create a `docs/screenshots/` folder, drop images in with those names, and they'll render inline
-here automatically — e.g. `![App UI](docs/screenshots/app-ui.png)`.
 
 ---
 
