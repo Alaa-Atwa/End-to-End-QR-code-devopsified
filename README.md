@@ -7,8 +7,6 @@ and observed with a real Prometheus/Grafana stack.
 The app itself is intentionally simple — a URL in, a QR code out. The infrastructure and delivery
 pipeline around it is the actual point of this repo.
 
-> Base application originally from [rishabkumar7/devops-qr-code](https://github.com/rishabkumar7/devops-qr-code) — this repo builds a complete DevOps platform around it.
-
 ---
 
 ## Table of contents
