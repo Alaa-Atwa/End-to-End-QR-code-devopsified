@@ -12,6 +12,12 @@ load_dotenv()
 
 app = FastAPI()
 
+# for prometheus
+# to add /metrics endpoint to your api 
+from prometheus_fastapi_instrumentator import Instrumentator
+
+Instrumentator().instrument(app).expose(app)
+
 # Allowing CORS for local testing
 origins = [
     "http://localhost:3000"

@@ -97,8 +97,14 @@ helm rollback prod 1
 get svc -n qr-code-app 
 
 
+# create grafana secrets manually 
+kubectl create namespace monitoring
+kubectl create secret generic grafana-admin-secret \
+  --namespace monitoring \
+  --from-literal=admin-password=somepassword
 
-
+# viewing it after configuring prometheus 
+kubectl port-forward svc/monitoring-grafana -n monitoring 3000:80
 
 
 
