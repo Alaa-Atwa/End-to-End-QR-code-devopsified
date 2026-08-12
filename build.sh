@@ -72,10 +72,29 @@ kubectl config set-context namespace=qr-app-code
 # supplying the environment-specific numbers — one chart, many environments, no duplication. 
 # It also gives you helm rollback (revert to a previous release in one command) and helm upgrade (apply changes as a tracked, named release) instead of a folder of loose kubectl apply commands with no history.
 
+# set secrets manually in production
+# the secret is created once from the terminal 
+
+kubectl create secret generic qr-app-secrets \
+  --namespace qr-code-app \
+  --from-literal=AWS_ACCESS_KEY=<your-key> \
+  --from-literal=AWS_SECRET_KEY=<your-secret> \
+  --from-literal=BUCKET_NAME=<your-bucket>
+
+# list after installation 
+helm list -n qr-code-app
+kubectl get pods -n qr-code-app
+
+# ci update using helm
+helm upgrade 
+
+# rollback if errror happened
+helm rollback prod 1
 
 
-
-
+# get loadbalancer url for the frontend 
+# get the url and browse it
+get svc -n qr-code-app 
 
 
 

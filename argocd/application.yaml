@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: qr-code-app
+  namespace: argocd
+spec:
+  project: default
+
+  source: # where the desired state lives ?
+    repoURL: https://github.com/Alaa-Atwa/End-to-End-QR-code-devopsified.git
+    targetRevision: main # on the main branch 
+    path: helm/qr-code-app
+    helm:
+      valueFiles:
+        - values.yaml
+
+  destination: # where to apply changes ?
+    server: https://kubernetes.default.svc
+    # it means use this same cluster argocd running in 
+    namespace: qr-code-app
+
+  syncPolicy:
+    automated:
+      prune: true # if resource deleted from the helm chart in git, delete the matching resource from cluster.
+      selfHeal: true # explained below !
+    syncOptions:
+      - CreateNamespace=true
+
+# selfHeal: true — this is the "pull-based" behavior made concrete,
+# if someone runs kubectl edit deployment qr-api and manually changes something, ArgoCD reverts it back to match Git

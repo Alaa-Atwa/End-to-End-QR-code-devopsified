@@ -1,0 +1,40 @@
+namespace: qr-code-app
+
+api:
+  image:
+    repository: 970460117753.dkr.ecr.us-east-1.amazonaws.com/qr-code-api
+    tag: latest
+  replicas: 2
+  port: 8000
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 250m
+      memory: 256Mi
+
+frontend:
+  image:
+    repository: 970460117753.dkr.ecr.us-east-1.amazonaws.com/qr-code-fronted
+    tag: latest
+  replicas: 2
+  port: 3000
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 250m
+      memory: 256Mi
+  serviceType: LoadBalancer
+
+secretName: qr-app-secrets
+
+# the secret is created once from the terminal 
+
+# kubectl create secret generic qr-app-secrets \
+#   --namespace qr-code-app \
+#   --from-literal=AWS_ACCESS_KEY=<your-key> \
+#   --from-literal=AWS_SECRET_KEY=<your-secret> \
+#   --from-literal=BUCKET_NAME=<your-bucket>

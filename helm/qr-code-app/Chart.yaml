@@ -2,5 +2,5 @@ apiVersion: v2
 name: qr-code-app
 description: Helm chart for the QR code generator (API + frontend)
 type: application
-version: 0.1.0
-appVersion: "1.0.0"
+version: 0.1.0 # the chart's version
+appVersion: "1.0.0"  # the app's version that charts points to it.

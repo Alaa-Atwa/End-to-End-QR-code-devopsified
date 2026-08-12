@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: qr-api
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "qr-code-app.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.api.replicas }}
+  selector:
+    matchLabels:
+      app: qr-api
+  template:
+    metadata:
+      labels:
+        app: qr-api
+    spec:
+      containers:
+        - name: qr-api
+          image: "{{ .Values.api.image.repository }}:{{ .Values.api.image.tag }}"
+          ports:
+            - containerPort: {{ .Values.api.port }}
+          envFrom:
+            - secretRef:
+              name: {{ .Values.secretName }} 
+              # refering to the secret which is created manually in termainl once
+          resources:
+            {{- toYaml .Values.api.resources | nindent 12 }}
+          readinessProbe:
+            httpGet:
+              path: /docs
+              port: {{ .Values.api.port }}
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /docs
+              port: {{ .Values.api.port }}
+            initialDelaySeconds: 15
+            periodSeconds: 20
