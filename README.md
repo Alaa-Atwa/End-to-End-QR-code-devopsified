@@ -1,11 +1,8 @@
 # QR Code Generator — End-to-End DevOps Pipeline
 
-A simple two-tier app (Next.js frontend + FastAPI backend generating QR codes to S3) wrapped in a
+A two-tier app (Next.js frontend + FastAPI backend generating QR codes to S3) wrapped in a
 full, production-style DevOps pipeline: containerized, provisioned as code, deployed via GitOps,
 and observed with a real Prometheus/Grafana stack.
-
-The app itself is intentionally simple — a URL in, a QR code out. The infrastructure and delivery
-pipeline around it is the actual point of this repo.
 
 ---
 
