@@ -1,4 +1,7 @@
 #!/usr/bin/env bash 
+#=============
+# a collection of useful commands when building the projects
+#=============
 
 #---------- Building ECR ----------------
 aws ecr create-repository --repository-name qr-code-api --region us-east-1 
