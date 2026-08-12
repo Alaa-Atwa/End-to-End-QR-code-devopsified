@@ -64,7 +64,13 @@ aws ecr describe-repositories --query "repositories[*].[repositoryName,repositor
 
 kubectl config set-context namespace=qr-app-code
 
-
+#=========================================================
+# =============== helm ============================
+# ========================================================
+# why helm ?
+# Helm solves this by turning your manifests into a template with a single values.yaml 
+# supplying the environment-specific numbers — one chart, many environments, no duplication. 
+# It also gives you helm rollback (revert to a previous release in one command) and helm upgrade (apply changes as a tracked, named release) instead of a folder of loose kubectl apply commands with no history.
 
 
 
