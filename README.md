@@ -22,6 +22,10 @@ and observed with a real Prometheus/Grafana stack.
 
 ## Architecture
 
+
+![structure](./docs/imgs/devopsified-qr-code-structure.png)
+
+
 ```mermaid
 flowchart TB
     Dev[Developer] -->|git push to main| GHA[GitHub Actions CI]
